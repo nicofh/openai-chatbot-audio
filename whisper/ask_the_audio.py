@@ -40,7 +40,7 @@ class Genie:
 
 
 if __name__ == "__main__":
-    genie = Genie("bruno.txt")
+    genie = Genie("text_files/virAudio.txt")
     # print(genie.ask("Give me a list of questions that this person wants to know. Reply in original language"))
-    print(genie.ask("Give me a summary of this text in bullet points including how this person feels. Reply in original language"))
-    # print(genie.ask("Give me a summary of this text including how this person feels. Reply in original language"))
+    # print(genie.ask("Give me a summary of this text in bullet points. Reply in original language. Sender name is 'Vir'. I'm 'Gordy'"))
+    print(genie.ask("This is an audio I received. Tell me what is it about. Reply in original language"))
