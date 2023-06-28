@@ -1,12 +1,13 @@
 from dotenv import load_dotenv
+from pydub import AudioSegment
 import os
 import openai
 import datetime
+import sys
 
+sys.path.append('/path/to/ffmpeg')
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# import pdb; pdb.set_trace()
 
 class WhisperExporter:
 
@@ -14,7 +15,7 @@ class WhisperExporter:
         self._textes = []
 
     def whisper_to_text(self, path: str, filename: str):
-        f = open(f".{path}", "rb")
+        f = open(path, "rb")
         transcript = openai.Audio.transcribe("whisper-1", file=f)
         self.textes.append({"filename": filename, "text": transcript["text"]})
         return f"transcribed {path}"
@@ -36,6 +37,15 @@ class WhisperExporter:
 if __name__ == "__main__":
     exporter = WhisperExporter()
     # loop over all files if they end with the allowed endings
-    for file in [f for f in os.listdir("./audio_files") if os.path.splitext(f)[1] in [".m4a", ".mp3", ".mp4", ".mpeg", ".mpga", ".wav", ".webm"]]:
-        exporter.whisper_to_text(f"/audio_files/{file}", os.path.splitext(file)[0])
+    for file in [f for f in os.listdir("./audio_files") if os.path.splitext(f)[1] in [".m4a", ".mp3", ".mp4", ".mpeg", ".mpga", ".wav", ".webm", ".ogg"]]:
+        filename = os.path.splitext(file)[0]
+        file_extension = os.path.splitext(file)[1]
+        file_path = f"./audio_files/{file}"
+        # convert .ogg files to .mp4
+        if file_extension == ".ogg":
+            new_file_path = f"./audio_files/{filename}.mp4"
+            AudioSegment.from_ogg(file_path).export(new_file_path, format="mp4")
+            file_path = new_file_path
+            # DELETE OGG FILE HERE
+        exporter.whisper_to_text(file_path, filename) #  THIS METHOD ADDS "." TO PATH
     exporter.to_txt(exporter.textes)
