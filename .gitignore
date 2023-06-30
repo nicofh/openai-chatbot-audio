@@ -2,3 +2,5 @@
 .idea
 /stuff
 .env
+/audio_files/*
+/text_files/*
