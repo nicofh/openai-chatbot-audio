@@ -4,3 +4,5 @@
 .env
 /audio_files/*
 /text_files/*
+!/audio_files/sample.mp3
+!/text_files/sample.txt

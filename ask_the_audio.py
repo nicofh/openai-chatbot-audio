@@ -47,7 +47,7 @@ class Genie:
         return self.genie({"question": query})["answer"]
 
 if __name__ == "__main__":
-    genie = Genie("text_files/ramaAudio.txt")
+    genie = Genie("text_files/sample.txt")
     while True:
         user_input = input("Enter a query: ")
         if user_input == "exit":
