@@ -2,6 +2,7 @@ from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.chains import ConversationalRetrievalChain
 from langchain.document_loaders import TextLoader
 from langchain.memory import ConversationBufferMemory
@@ -25,7 +26,7 @@ class Genie:
         self.vectordb = self.embeddings(self.texts)
         self.retriever = self.vectordb.as_retriever()
         self.genie = ConversationalRetrievalChain.from_llm(
-                        llm=OpenAI(temperature=0), 
+                        llm=ChatOpenAI(temperature=0), 
                         chain_type="stuff", 
                         retriever=self.retriever,
                         memory=ConversationBufferMemory(memory_key="chat_history", return_messages=True),
@@ -47,7 +48,7 @@ class Genie:
         return self.genie({"question": query})["answer"]
 
 if __name__ == "__main__":
-    genie = Genie("text_files/sample.txt")
+    genie = Genie("text_files/VirAudio.txt")
     while True:
         user_input = input("Enter a query: ")
         if user_input == "exit":
