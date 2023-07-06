@@ -13,7 +13,7 @@ To get started with the demo, you will need to have Python (I use Python 3.8) in
 `pip install -r requirements.txt`
 3. You may need to run this if you get any errors related to the package
 `brew install ffmpeg`
-4. Set your `OPENAI_API_KEY` on `.env` file
+4. Create a file named `.env` on project root and set your key `OPENAI_API_KEY={YOUR_OPENAI_API_KEY}`
 5. Put your audio files in the `/audio_files` folder. It supports audios downladed from whatsapp web.
 6. Run `python whisper.py` file to generate a .txt file out for each of your audio data
 7. In line 51 of `ask_the_audio.py` change `text_files/sample.txt` for the name of the file you'd like to chat about
